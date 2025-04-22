@@ -16,7 +16,7 @@ on:
 env:
   REGISTRY: docker.io
   DOCKER_USER: vvi11iamng0
-  IMAGE_NAME: ${{ env.DOCKER_USER }}/${{ github.repository }}
+  IMAGE_NAME: vvi11iamng0/${{ github.repository }}
 
 
 
