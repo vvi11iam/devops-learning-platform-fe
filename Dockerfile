@@ -24,10 +24,12 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.template.conf .
 
-# Expose port
-EXPOSE 80
+# Add a simple entrypoint script to replace API URL
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
-# Start nginx
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
+# CMD ["/bin/sh" , "-c" , "envsubst '$INTERNAL_BACKEND' < nginx.template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
